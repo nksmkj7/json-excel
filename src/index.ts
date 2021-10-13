@@ -7,7 +7,7 @@ let flattenJson: object;
 let sheet: Excel.Worksheet;
 let headerInformation: headerInformationType= {};
 let cellTracker: cellTrackerType = {};
-let transformKey: string = ".";
+let delimiter: string = ".";
 
 interface sheet {
     title: string,
@@ -36,6 +36,8 @@ function  getSampleJson(json: object[]) {
   return json;
 }
 
+type workbookType = InstanceType <typeof Excel.Workbook>
+
 function addWorkSheet (workSheet: sheet) {
     let worksheetTittle = workSheet.title;
     let worksheetOptions = workSheet?.options || {};
@@ -52,7 +54,7 @@ function setExcelHeader() {
 
 function getHeaderInformation() {
   for (const data in flattenJson) {
-    let splittedArray = data.split(transformKey);
+    let splittedArray = data.split(delimiter);
     let lastHeaderKey = splittedArray[splittedArray.length - 1];
     let rowSpan = 0;
     for (const headerKey of splittedArray) {
@@ -110,27 +112,28 @@ function findMaxDepth(flattenJson: object) {
 
 
 module.exports = {
-    setTransformKey: (key:string) => transformKey = key,
-    generateExcel: (sheetConfigurations: sheet[]) => {
-        sheetConfigurations.forEach(sheetConfig => {
-            sheet = addWorkSheet(sheetConfig);
-            let data = Array.isArray(sheetConfig.data) ? sheetConfig.data : [sheetConfig.data];
-            flattenJson = flatten(getSampleJson(data),{
-                transformKey: function(transformKey){
-                    return '__' + transformKey + '__';
-                }
-            });
-            findMaxDepth(flattenJson);
-            setExcelHeader()
-            sheet.columns = Object.keys(flattenJson).map((jsonKey) => ({
-                key: jsonKey,
-            }));
-            data.forEach((jsonData) => {
-                sheet.addRow(flatten(jsonData));
-            });
-            return workbook;
-        });
+    setDelimiter: (delimiter:string) => delimiter = delimiter,
+  generateExcel: (sheetConfigurations: sheet[]) => {
+    if (!Array.isArray(sheetConfigurations)) {
+      sheetConfigurations = [sheetConfigurations];
     }
+    sheetConfigurations.forEach(sheetConfig => {
+        sheet = addWorkSheet(sheetConfig);
+        let data = Array.isArray(sheetConfig.data) ? sheetConfig.data : [sheetConfig.data];
+        flattenJson = flatten(getSampleJson(data), {
+          delimiter
+        });
+        findMaxDepth(flattenJson);
+        setExcelHeader()
+        sheet.columns = Object.keys(flattenJson).map((jsonKey) => ({
+            key: jsonKey,
+        }));
+        data.forEach((jsonData) => {
+            sheet.addRow(flatten(jsonData));
+        });
+    });
+    return workbook;
+  }
 }
 
 
