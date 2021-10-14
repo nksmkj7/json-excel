@@ -112,7 +112,8 @@ function findMaxDepth(flattenJson: object) {
 
 
 module.exports = {
-    setDelimiter: (delimiter:string) => delimiter = delimiter,
+  add: (a: number, b: number) => { return a + b;  },
+  setDelimiter: (delimiter:string) => delimiter = delimiter,
   generateExcel: (sheetConfigurations: sheet[]) => {
     if (!Array.isArray(sheetConfigurations)) {
       sheetConfigurations = [sheetConfigurations];
