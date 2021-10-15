@@ -1,9 +1,8 @@
 import * as Excel from 'exceljs';
 const workbook = new Excel.Workbook();
-import * as flatten from 'flat';
+import { flatten } from 'flat';
 
 let maxDepth: number = 0;
-let flattenJson: object;
 let sheet: Excel.Worksheet;
 let headerInformation: headerInformationType= {};
 let cellTracker: cellTrackerType = {};
@@ -44,15 +43,15 @@ function addWorkSheet (workSheet: sheet) {
     return workbook.addWorksheet(worksheetTittle, worksheetOptions);
 };
 
-function setExcelHeader() {
-  let headerInformation = getHeaderInformation();
+function setExcelHeader(flattenJson: object) {
+  let headerInformation = getHeaderInformation(flattenJson);
   for (const header in headerInformation) {
     mergeCell(header, headerInformation[header]);
   }
   // console.log(sheet);
 }
 
-function getHeaderInformation() {
+function getHeaderInformation(flattenJson: object) {
   for (const data in flattenJson) {
     let splittedArray = data.split(delimiter);
     let lastHeaderKey = splittedArray[splittedArray.length - 1];
@@ -103,29 +102,36 @@ function getColumnCell(rowNumber:number, colSpan:number, rowSpan:number) {
 
 function findMaxDepth(flattenJson: object) {
   Object.keys(flattenJson).forEach((data) => {
-    let splittedArray = data.split('.');
+    let splittedArray = data.split(delimiter);
     if (maxDepth < splittedArray.length) {
       maxDepth = splittedArray.length + 1;
     }
   });
 }
 
+function customDelimiter(delimiter: string){
+  delimiter = delimiter
+}
 
-module.exports = {
-  add: (a: number, b: number) => { return a + b;  },
-  setDelimiter: (delimiter:string) => delimiter = delimiter,
-  generateExcel: (sheetConfigurations: sheet[]) => {
+export = {
+  delimiter,
+  setDelimiter: function (delimiter:string){
+    delimiter = delimiter
+  },
+  getDelimiter = function(){}
+  generateExcel: function (sheetConfigurations: sheet[]) {
     if (!Array.isArray(sheetConfigurations)) {
       sheetConfigurations = [sheetConfigurations];
     }
     sheetConfigurations.forEach(sheetConfig => {
+        cellTracker = {};
         sheet = addWorkSheet(sheetConfig);
         let data = Array.isArray(sheetConfig.data) ? sheetConfig.data : [sheetConfig.data];
-        flattenJson = flatten(getSampleJson(data), {
+        let flattenJson: object = flatten(getSampleJson(data), {
           delimiter
         });
         findMaxDepth(flattenJson);
-        setExcelHeader()
+        setExcelHeader(flattenJson)
         sheet.columns = Object.keys(flattenJson).map((jsonKey) => ({
             key: jsonKey,
         }));

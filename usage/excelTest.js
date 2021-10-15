@@ -1,4 +1,4 @@
-const excel = require("../testIndex");
+const excel = require("../lib/index");
 async function generate() {
     const workbook = excel.generateExcel([
         {

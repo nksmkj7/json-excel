@@ -4,7 +4,7 @@
   "description": "Convert json data to excel with nested excel header",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json"
@@ -21,8 +21,10 @@
     "flat": "^5.0.2"
   },
   "devDependencies": {
+    "@types/rewire": "^2.5.28",
     "jest": "^27.2.5",
     "prettier": "^2.4.1",
+    "rewire": "^5.0.0",
     "test-node": "0.0.2",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.3.0",
