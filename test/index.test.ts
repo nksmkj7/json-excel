@@ -82,7 +82,7 @@ describe("test json to excel", () => {
         it("should return starting column",() => {
             expect(startingColumn).toBe(1);
         })
-        it("should track occupied column for given row number upto the row occupied with rowspan",()=>{
+        it("should track occupied column for given row number upto the row occupied with row span",()=>{
             let cellTracker = myModule.__get__('cellTracker');
             expect(cellTracker).toEqual({"1":10})
         })
