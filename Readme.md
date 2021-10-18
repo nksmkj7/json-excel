@@ -104,23 +104,3 @@ Method generate
 ### title
 Title is name for sheet.
 
-# How does it work ?
-Brief description of trait's functions
-| Function name | Arguments | Return value| Description
-| ----------- | ----------- |----------- |----------- |
-| rules | - | array | Laravel validation rules are returned as an array. Each row will get validated against those rules.
-| messages | - | array | Custom messages for laravel validation rules.
-| setModel | file path of model | - | Setup the model required for operation.
-| getModel | - | instance of model | Get the model instance.
-| getMessageBag | - | instance of messageBag | Collect the messages.
-| totalRowsCount | collection of all rows | total row count of collection. | -
-| headers | - | array | Headers for export excel of discarded rows.
-| rejectedExcelDownloadUrl | - | string | Export discarded excel download url is set here.   ``` default: url('download-rejected-data/')```.
-| prepareCsvData | collection/array | array | accept individual row and convert row data to array if it is a collection and return transformed data. 
-| transform | array | array | Transformed data in order to store in database and return transformed data.
-| validate | 1. array 2.callback | boolean | Validate individual row data against rule and execute callback if any.
-| insert | collection | boolean | Accepts excel rows collection. Execute all the trait function in order to validate and insert data to database.
-| exportRejectedData | array | boolean | Accept headers array and return true if there are rejected row, otherwise false.
-| create | array | collection | Insert validated and transformed data into database. For extra logic, one needs to overwrite this function.
-
->Note: This trait only supports importing to collections. If trait is insufficient for your purpose, laravel-excel has its own row validation features. One can modify as per his/her needs.
