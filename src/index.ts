@@ -11,7 +11,10 @@ let delimiter: string = ".";
 interface sheet {
     title: string,
     data: object| object[],
-    options?: object
+    options?: {
+      [index: string]: any
+    }
+    delimiter?: string 
 }
 
 interface headerInformationType {
@@ -48,7 +51,6 @@ function setExcelHeader(flattenJson: object) {
   for (const header in headerInformation) {
     mergeCell(header, headerInformation[header]);
   }
-  // console.log(sheet);
 }
 
 function getHeaderInformation(flattenJson: object) {
@@ -62,7 +64,6 @@ function getHeaderInformation(flattenJson: object) {
         !headerInformation?.[headerKey] ||
         (headerInformation?.[headerKey] && headerInformation[headerKey].rowNumber != rowNumber)
       ) {
-        // console.log(lastHeaderKey, headerKey, "apple apple");
         if (lastHeaderKey == headerKey) {
           rowSpan = maxDepth - rowNumber - 1;
         }
@@ -74,7 +75,6 @@ function getHeaderInformation(flattenJson: object) {
       } else {
         headerInformation[headerKey]['colSpan'] += 1;
       }
-      // console.log(headerInformation);
     }
   }
   return headerInformation;
@@ -109,23 +109,18 @@ function findMaxDepth(flattenJson: object) {
   });
 }
 
-function customDelimiter(delimiter: string){
-  delimiter = delimiter
-}
+
 
 export = {
-  delimiter,
-  setDelimiter: function (delimiter:string){
-    delimiter = delimiter
-  },
-  getDelimiter = function(){}
   generateExcel: function (sheetConfigurations: sheet[]) {
     if (!Array.isArray(sheetConfigurations)) {
       sheetConfigurations = [sheetConfigurations];
     }
     sheetConfigurations.forEach(sheetConfig => {
+      delimiter = sheetConfigurations[0]?.delimiter ?? "."
+      console.log(delimiter, 'delimiter is');
         cellTracker = {};
-        sheet = addWorkSheet(sheetConfig);
+      sheet = addWorkSheet(sheetConfig);
         let data = Array.isArray(sheetConfig.data) ? sheetConfig.data : [sheetConfig.data];
         let flattenJson: object = flatten(getSampleJson(data), {
           delimiter

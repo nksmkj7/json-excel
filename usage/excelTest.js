@@ -7,7 +7,7 @@ async function generate() {
                 {
                     study: {
                         science: {
-                            bio: {
+                            "bio.sio": {
                                 pharmacy: "bandana",
                                 mbbs: {
                                     general: "roshan",
@@ -35,7 +35,7 @@ async function generate() {
                 {
                     study: {
                         science: {
-                            bio: {
+                            "bio.sio": {
                                 pharmacy: "rajani",
                                 mbbs: {
                                     general: "haris",
@@ -61,10 +61,9 @@ async function generate() {
                     },
                 },
             ],
+            delimiter: "%",
         },
     ]);
-    // console.log(workbook, "bappe");
     await workbook.xlsx.writeFile("cat.xlsx");
 }
 generate();
-// console.log(workbook, "excel is");

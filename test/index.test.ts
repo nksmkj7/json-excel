@@ -1,16 +1,15 @@
-import { setDelimiter,getDelimiter } from "../lib/index";
+import * as jsonExcel from "../lib/index";
 import rewire from "rewire";
 let myModule = rewire('../lib/index');
 import { flatten } from 'flat';
-let json: any = '[{"study":{"science":{"bio":{"pharmacy":"ritu","mbbs":{"general":"roshan","md":"sanjay"}},"math":{"pureMath":"rukesh","engineering":{"computer":{"hardware":"Aungush","software":"nikesh"},"civil":"seena","mechanical":"santosh"}}},"management":{"bba":"pratik","bbs":"jeena"}}},{"study":{"science":{"bio":{"pharmacy":"rajani","mbbs":{"general":"haris","md":"shreetika"}},"math":{"pureMath":"prijal","engineering":{"computer":{"hardware":"samina","software":"anish"},"civil":"rasil","mechanical":"amit"}}},"management":{"bba":"anjeela","bbs":"sushmin"}}}]';
+let json: any = [{"study":{"science":{"bio":{"pharmacy":"ritu","mbbs":{"general":"roshan","md":"sanjay"}},"math":{"pureMath":"rukesh","engineering":{"computer":{"hardware":"Aungush","software":"nikesh"},"civil":"seena","mechanical":"santosh"}}},"management":{"bba":"pratik","bbs":"jeena"}}},{"study":{"science":{"bio":{"pharmacy":"rajani","mbbs":{"general":"haris","md":"shreetika"}},"math":{"pureMath":"prijal","engineering":{"computer":{"hardware":"samina","software":"anish"},"civil":"rasil","mechanical":"amit"}}},"management":{"bba":"anjeela","bbs":"sushmin"}}}];
 import * as Excel from 'exceljs';
 const workbook = new Excel.Workbook();
 
 describe("test json to excel", () => {
     const findMaxDepth: Function = myModule.__get__('findMaxDepth');
     const getSampleJson: Function = myModule.__get__('getSampleJson')
-    let sampleJson: object = getSampleJson(JSON.parse(json))
-    let maxDepth: number = myModule.__get__('maxDepth');
+    let sampleJson: object = getSampleJson(json)
     let flattenJson = flatten(sampleJson);
     it("should return the first element of parsed sample json", () => {
         const result: object = {
@@ -50,30 +49,6 @@ describe("test json to excel", () => {
         let changedMaxDepth:number = myModule.__get__('maxDepth');
         expect(changedMaxDepth).toBe(7);
     })
-
-    describe('custom delimiter',() =>{
-        // it("should set delimiter",() => {
-        //     let test = setDelimiter("%")
-        //     let delimiter = myModule.__get__('delimiter')
-        //     console.log(test);
-        //     expect(delimiter).toBe("%");
-        // })
-
-        it("should flatten with custom delimiter",() => {
-            let obj = {
-                apple: {
-                    ball: "cat"
-                }
-            };
-            setDelimiter("%")
-            console.log(getDelimiter());
-            // let delimiter = myModule.__get__('delimiter');
-            // console.log(delimiter,'delimiter is');
-            // console.log(flatten(obj,{delimiter}))
-            // expect(flatten(obj,{delimiter})).toEqual({"apple%ball":"cat"});
-        })
-    })
-
 
     it("should return information of each key expected excel row number, colspan and rowspan",() => {
         let getHeaderInformation = myModule.__get__('getHeaderInformation');
@@ -121,6 +96,31 @@ describe("test json to excel", () => {
         let sheet = myModule.__get__("sheet");
         const row = sheet.getRow(1);
         expect(row.getCell(1).value).toEqual(row.getCell(9).value)
+    })
+
+    describe("should generate excel for given json data", () => {
+        
+        it("should generate excel that has testSheet as sheet name", () => {
+            let data = {
+                "header": {
+                    "column": "test data"
+                }
+            };
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "testSheet", data: data }]);
+            expect(generatedWorkBook.getWorksheet("testSheet").name).toEqual("testSheet");
+        })
+
+        it("should generate excel that has second test Sheet as sheet name and column name with .", () => {
+            let data = {
+                "header": {
+                    "column.fullStop": "test data"
+                }
+            };
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "second test Sheet", data: data,delimiter: "%"}]);
+            let sheet = generatedWorkBook.getWorksheet("second test Sheet")
+            expect(sheet.getRow(2).values).toEqual(expect.arrayContaining(['column.fullStop']));
+        })
+
     })
 
 })
