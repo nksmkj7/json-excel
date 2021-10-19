@@ -78,7 +78,7 @@ is converted to below like excel.\
 ```js
 npm install json-excel
 ```
-This trait helps you to skip rows that don't satisfy specified rules in rules function and generated separated excel file of skipped rows with reasons.
+
 # Usage
 ```js
 const excel = require('json-excel');
