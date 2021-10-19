@@ -1,6 +1,6 @@
 {
   "name": "json-as-excel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert json data to excel with nested excel header",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
