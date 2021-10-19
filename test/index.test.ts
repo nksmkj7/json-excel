@@ -98,14 +98,14 @@ describe("test json to excel", () => {
         expect(row.getCell(1).value).toEqual(row.getCell(9).value)
     })
 
-    describe("should generate excel for given json data", () => {
+    describe("When provide json data to the function", () => {
         
+        let data = {
+            "header": {
+                "column": "test data"
+            }
+        };
         it("should generate excel that has testSheet as sheet name", () => {
-            let data = {
-                "header": {
-                    "column": "test data"
-                }
-            };
             let generatedWorkBook = jsonExcel.generateExcel([{ title: "testSheet", data: data }]);
             expect(generatedWorkBook.getWorksheet("testSheet").name).toEqual("testSheet");
         })
@@ -119,6 +119,21 @@ describe("test json to excel", () => {
             let generatedWorkBook = jsonExcel.generateExcel([{ title: "second test Sheet", data: data,delimiter: "%"}]);
             let sheet = generatedWorkBook.getWorksheet("second test Sheet")
             expect(sheet.getRow(2).values).toEqual(expect.arrayContaining(['column.fullStop']));
+        })
+
+        it("should generate excel with two sheet", () => {
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "first sheet", data: data, delimiter: "%" }, { title: "second sheet", data: data, delimiter: "%" }]);
+            let sheets:string[] = [];
+            generatedWorkBook.eachSheet(function (worksheet) {
+                sheets.push(worksheet.name);
+            });
+            expect(sheets).toEqual(expect.arrayContaining(['first sheet','second sheet']));
+        })
+
+        it("should apply options for respective sheet", () => {
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "test sheet with options", data: data, delimiter: "%", options: { properties: { outlineLevelCol: 2 } } }]);
+            let sheet = generatedWorkBook.getWorksheet("test sheet with options");
+            expect(sheet.properties.outlineLevelCol).toBe(2);
         })
 
     })

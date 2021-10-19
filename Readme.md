@@ -191,3 +191,14 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
   };
   generateExcel([{title:"firstSheet", data:data, delimiter:"%", options:options}])
   ```
+
+## Acknowledgments
+1. [ exceljs](https://www.npmjs.com/package/exceljs) 
+2. [ flat ](https://www.npmjs.com/package/flat)
+
+
+## MIT License
+
+```
+Copyright (c) 2021
+```
