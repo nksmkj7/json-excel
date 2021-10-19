@@ -1,19 +1,21 @@
 {
-  "name": "json-excel",
+  "name": "json-to-excel",
   "version": "1.0.0",
   "description": "Convert json data to excel with nested excel header",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "build": "tsc",
     "format": "prettier --write \"lib/*.js\" \"src/*.ts\" \"lib/*.ts\"",
     "lint": "tslint -p tsconfig.json"
   },
   "keywords": [
-    "json-excel"
+    "json-excel",
+    "excel",
+    "node excel"
   ],
   "author": "Nikesh Makaju",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/flat": "^5.0.2",
     "@types/jest": "^27.0.2",
