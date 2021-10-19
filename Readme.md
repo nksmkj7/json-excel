@@ -70,7 +70,7 @@ Json object i.e.
 ];
 ```
 is converted to below like excel.\
-![alt text](./image/sample.png)
+![alt text](https://github.com/nksmkj7/json-excel/blob/main/image/sample.png?raw=true)
 
 #### No need to manually merge cells now !! 😊 🤩
 
