@@ -81,7 +81,7 @@ npm install json-excel
 
 # Usage
 ```js
-const excel = require('json-excel');
+const excel = require('json-as-excel');
 const data = [
         {
           study: {
