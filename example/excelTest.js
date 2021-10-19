@@ -8,27 +8,27 @@ async function generate() {
           study: {
             science: {
               bio: {
-                pharmacy: 'bandana',
+                pharmacy: 'Kamran Bains',
                 mbbs: {
-                  general: 'roshan',
-                  md: 'sanjay',
+                  general: 'Chloe-Ann Vega',
+                  md: 'Amayah Barajas',
                 },
               },
               math: {
-                pureMath: 'rukesh',
+                pureMath: 'Safa Blackburn',
                 engineering: {
                   computer: {
-                    hardware: 'Aungush',
-                    software: 'nikesh',
+                    hardware: 'Kezia Gonzalez',
+                    software: 'Boyd Mcbride',
                   },
-                  civil: 'seena',
-                  mechanical: 'santosh',
+                  civil: 'Leela Romero',
+                  mechanical: 'Mateusz Thornton',
                 },
               },
             },
             management: {
-              bba: 'pratik',
-              bbs: 'jeena',
+              bba: 'Amelie Bell',
+              bbs: 'Jevon Myers',
             },
           },
         },
@@ -36,27 +36,27 @@ async function generate() {
           study: {
             science: {
               bio: {
-                pharmacy: 'rajani',
+                pharmacy: 'Riley-James Duran',
                 mbbs: {
-                  general: 'haris',
-                  md: 'shreetika',
+                  general: 'Glen Churchill',
+                  md: 'Sachin Deacon',
                 },
               },
               math: {
-                pureMath: 'prijal',
+                pureMath: 'Rufus Redfern',
                 engineering: {
                   computer: {
-                    hardware: 'samina',
-                    software: 'anish',
+                    hardware: 'Jonah Best',
+                    software: 'Zion Ingram',
                   },
-                  civil: 'rasil',
-                  mechanical: 'amit',
+                  civil: 'Matei Gibbs',
+                  mechanical: 'Kaelan Mcdonnell',
                 },
               },
             },
             management: {
-              bba: 'anjeela',
-              bbs: 'sushmin',
+              bba: 'Spike Peel',
+              bbs: 'Zakariyah Gray',
             },
           },
         },

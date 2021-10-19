@@ -10,7 +10,64 @@
 Take json object as an argument and convert them into excel data. \
 Json object i.e.
 ```json
-[{"study":{"science":{"bio":{"pharmacy":"ritu","mbbs":{"general":"roshan","md":"sanjay"}},"math":{"pureMath":"rukesh","engineering":{"computer":{"hardware":"Aungush","software":"nikesh"},"civil":"seena","mechanical":"santosh"}}},"management":{"bba":"pratik","bbs":"jeena"}}},{"study":{"science":{"bio":{"pharmacy":"rajani","mbbs":{"general":"haris","md":"shreetika"}},"math":{"pureMath":"prijal","engineering":{"computer":{"hardware":"samina","software":"anish"},"civil":"rasil","mechanical":"amit"}}},"management":{"bba":"anjeela","bbs":"sushmin"}}}];
+[
+  {
+    "study": {
+      "science": {
+        "bio": {
+          "pharmacy": "Kamran Bains",
+          "mbbs": {
+            "general": "Chloe-Ann Vega",
+            "md": "Amayah Barajas"
+          }
+        },
+        "math": {
+          "pureMath": "Safa Blackburn",
+          "engineering": {
+            "computer": {
+              "hardware": "Kezia Gonzalez",
+              "software": "Boyd Mcbride"
+            },
+            "civil": "Leela Romero",
+            "mechanical": "Mateusz Thornton"
+          }
+        }
+      },
+      "management": {
+        "bba": "Amelie Bell",
+        "bbs": "Jevon Myers"
+      }
+    }
+  },
+  {
+    "study": {
+      "science": {
+        "bio": {
+          "pharmacy": "Riley-James Duran",
+          "mbbs": {
+            "general": "Glen Churchill",
+            "md": "Sachin Deacon"
+          }
+        },
+        "math": {
+          "pureMath": "Rufus Redfern",
+          "engineering": {
+            "computer": {
+              "hardware": "Jonah Best",
+              "software": "Zion Ingram"
+            },
+            "civil": "Matei Gibbs",
+            "mechanical": "Kaelan Mcdonnell"
+          }
+        }
+      },
+      "management": {
+        "bba": "Spike Peel",
+        "bbs": "Zakariyah Gray"
+      }
+    }
+  }
+];
 ```
 is converted to below like excel.\
 ![alt text](./image/sample.png)
@@ -25,67 +82,68 @@ This trait helps you to skip rows that don't satisfy specified rules in rules fu
 # Usage
 ```js
 const excel = require('json-excel');
+const data = [
+        {
+          study: {
+            science: {
+              bio: {
+                pharmacy: 'Kamran Bains',
+                mbbs: {
+                  general: 'Chloe-Ann Vega',
+                  md: 'Amayah Barajas',
+                },
+              },
+              math: {
+                pureMath: 'Safa Blackburn',
+                engineering: {
+                  computer: {
+                    hardware: 'Kezia Gonzalez',
+                    software: 'Boyd Mcbride',
+                  },
+                  civil: 'Leela Romero',
+                  mechanical: 'Mateusz Thornton',
+                },
+              },
+            },
+            management: {
+              bba: 'Amelie Bell',
+              bbs: 'Jevon Myers',
+            },
+          },
+        },
+        {
+          study: {
+            science: {
+              bio: {
+                pharmacy: 'Riley-James Duran',
+                mbbs: {
+                  general: 'Glen Churchill',
+                  md: 'Sachin Deacon',
+                },
+              },
+              math: {
+                pureMath: 'Rufus Redfern',
+                engineering: {
+                  computer: {
+                    hardware: 'Jonah Best',
+                    software: 'Zion Ingram',
+                  },
+                  civil: 'Matei Gibbs',
+                  mechanical: 'Kaelan Mcdonnell',
+                },
+              },
+            },
+            management: {
+              bba: 'Spike Peel',
+              bbs: 'Zakariyah Gray',
+            },
+          },
+        },
+      ]
 const workbook = excel.generateExcel([
     {
       title: 'First sheet',
-      data: [
-        {
-          study: {
-            science: {
-              bio: {
-                pharmacy: 'bandana',
-                mbbs: {
-                  general: 'roshan',
-                  md: 'sanjay',
-                },
-              },
-              math: {
-                pureMath: 'rukesh',
-                engineering: {
-                  computer: {
-                    hardware: 'Aungush',
-                    software: 'nikesh',
-                  },
-                  civil: 'seena',
-                  mechanical: 'santosh',
-                },
-              },
-            },
-            management: {
-              bba: 'pratik',
-              bbs: 'jeena',
-            },
-          },
-        },
-        {
-          study: {
-            science: {
-              bio: {
-                pharmacy: 'rajani',
-                mbbs: {
-                  general: 'haris',
-                  md: 'shreetika',
-                },
-              },
-              math: {
-                pureMath: 'prijal',
-                engineering: {
-                  computer: {
-                    hardware: 'samina',
-                    software: 'anish',
-                  },
-                  civil: 'rasil',
-                  mechanical: 'amit',
-                },
-              },
-            },
-            management: {
-              bba: 'anjeela',
-              bbs: 'sushmin',
-            },
-          },
-        },
-      ],
+      data: data,
     },
   ]);
 ```
@@ -98,9 +156,38 @@ await workbook.xlsx.writeFile('sample.xlsx');
 > For the detail reference of [ File I/O](https://www.npmjs.com/package/exceljs#file-io)
 
 # Method
-generateExcel([{ title, data, delimiter, options }]). \ 
-Method generate
+> generateExcel([{ title, data, delimiter, options }]).<br>
+Method generateExcel accepts array of objects. Each object represents individual sheet. This method returns exceljs workbook instance.
 
 ### title
 Title is name for sheet.
 
+### data
+Data is json object whose keys are generated as header in excel and values are placed as new row per object.
+
+### delimiter 
+  `.` is used as a default delimiter. If json data consists key with `'.'`, one need to change delimiter to any other delimiter.
+  ```js
+  generateExcel([{title:"firstSheet", data:data, delimiter:"%"}])
+  ```
+
+### options
+options are the exceljs available worksheet options i.e. [Worksheet Properties](https://www.npmjs.com/package/exceljs#worksheet-properties), [Page Setup](https://www.npmjs.com/package/exceljs#page-setup), [Headers and Footers](https://www.npmjs.com/package/exceljs#headers-and-footers)\
+More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs)
+ ```js
+  const options = {
+    properties:{
+      outlineLevelCol:2,
+      tabColor:{
+        argb:'FF00FF00'
+      },
+      defaultRowHeight:15
+    },
+    pageSetup:{
+      fitToPage: true,
+      fitToHeight: 5, 
+      fitToWidth: 7
+    }
+  };
+  generateExcel([{title:"firstSheet", data:data, delimiter:"%", options:options}])
+  ```
