@@ -76,7 +76,7 @@ is converted to below like excel.\
 
 # Installation 
 ```js
-npm install json-excel
+npm install json-as-excel
 ```
 
 # Usage
