@@ -3,3 +3,4 @@
 /coverage/
 /.DS_Store
 /example/.DS_Store
+/example/node_modules

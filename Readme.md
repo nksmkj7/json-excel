@@ -196,6 +196,14 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
 1. [ exceljs](https://www.npmjs.com/package/exceljs) 
 2. [ flat ](https://www.npmjs.com/package/flat)
 
+## Issues
+> If any issue is found, please raise issue in github.
+
+## Changelog
+| Version | Changes |
+| ----------- | ----------- |
+| 1.0.4 | <ul><li>Installation guide update in Readme</li></ul> | |
+| 1.0.5 | <ul><li>Example updated in github</li><li>Bug Fixes<ul><li>Fixed crash when sheet data is empty object</li><li>Check mandatory title and data for sheet configuration. If not provided, error is thrown</li></ul> </li></ul> | |
 
 ## MIT License
 

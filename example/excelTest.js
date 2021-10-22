@@ -1,4 +1,4 @@
-const excel = require('../lib/index');
+const excel = require('json-as-excel');
 async function generate() {
   const workbook = excel.generateExcel([
     {
