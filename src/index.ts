@@ -31,6 +31,9 @@ interface CellTrackerType {
 
 function getSampleJson(json: object[]) {
   if (typeof json === 'object' && Array.isArray(json)) {
+    if (json.length <= 0) {
+      return {};
+    }
     return json[0];
   }
   return json;
@@ -118,11 +121,22 @@ export = {
     if (!Array.isArray(sheetConfigurations)) {
       sheetConfigurations = [sheetConfigurations];
     }
+    const checkSheetConfiguration = (sheetConfiguration: Sheet) => {
+      if (!sheetConfiguration?.title) {
+        throw new Error('Sheet title is missing in one of the sheet object');
+      }
+      if (!sheetConfiguration?.data) {
+        throw new Error('Sheet data is missing in one of the sheet object');
+      }
+    }
     sheetConfigurations.forEach((sheetConfig) => {
       delimiter = sheetConfigurations[0]?.delimiter ?? '.';
       cellTracker = {};
+      maxDepth = 0;
+      headerInformation = {};
       sheet = addWorkSheet(sheetConfig);
-      const data = Array.isArray(sheetConfig.data) ? sheetConfig.data : [sheetConfig.data];
+      checkSheetConfiguration(sheetConfig);
+      const data = Array.isArray(sheetConfig?.data) ? sheetConfig?.data : [sheetConfig?.data];
       const flattenJson: object = flatten(getSampleJson(data), {
         delimiter,
       });

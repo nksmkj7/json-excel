@@ -62,6 +62,10 @@ async function generate() {
         },
       ],
     },
+    {
+      title: 'second sheet',
+      data: [],
+    },
   ]);
   await workbook.xlsx.writeFile('sample.xlsx');
 }

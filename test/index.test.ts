@@ -11,6 +11,10 @@ describe("test json to excel", () => {
     const getSampleJson: Function = myModule.__get__('getSampleJson')
     let sampleJson: object = getSampleJson(json)
     let flattenJson = flatten(sampleJson);
+    it("should return empty object if data is empty", () => {
+        expect(getSampleJson([])).toEqual({});
+    })
+
     it("should return the first element of parsed sample json", () => {
         const result: object = {
             study: {
@@ -134,6 +138,12 @@ describe("test json to excel", () => {
             let generatedWorkBook = jsonExcel.generateExcel([{ title: "test sheet with options", data: data, delimiter: "%", options: { properties: { outlineLevelCol: 2 } } }]);
             let sheet = generatedWorkBook.getWorksheet("test sheet with options");
             expect(sheet.properties.outlineLevelCol).toBe(2);
+        })
+
+        it("should generate empty excel even when empty data is provided", () => {
+            let data:object = [];
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "empty sheet", data: data }]);
+            expect(generatedWorkBook.getWorksheet("empty sheet").name).toEqual("empty sheet");
         })
 
     })
