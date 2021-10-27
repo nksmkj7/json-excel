@@ -54,29 +54,29 @@ describe("test json to excel", () => {
         expect(changedMaxDepth).toBe(7);
     })
 
-    it("should return information of each key expected excel row number, colspan and rowspan",() => {
+    it("should return information of each key expected excel row number, colspan and rowspan with delimiter appended at the end of each headerKey",() => {
         let getHeaderInformation = myModule.__get__('getHeaderInformation');
         let headerInformation = getHeaderInformation(flattenJson);
         let result = {
-            study: { colSpan: 9, rowSpan: 0, rowNumber: 1 },
-            science: { colSpan: 7, rowSpan: 0, rowNumber: 2 },
-            bio: { colSpan: 2, rowSpan: 0, rowNumber: 3 },
-            pharmacy: { colSpan: 0, rowSpan: 2, rowNumber: 4 },
-            mbbs: { colSpan: 1, rowSpan: 0, rowNumber: 4 },
-            general: { colSpan: 0, rowSpan: 1, rowNumber: 5 },
-            md: { colSpan: 0, rowSpan: 1, rowNumber: 5 },
-            math: { colSpan: 4, rowSpan: 0, rowNumber: 3 },
-            pureMath: { colSpan: 0, rowSpan: 2, rowNumber: 4 },
-            engineering: { colSpan: 3, rowSpan: 0, rowNumber: 4 },
-            computer: { colSpan: 1, rowSpan: 0, rowNumber: 5 },
-            hardware: { colSpan: 0, rowSpan: 0, rowNumber: 6 },
-            software: { colSpan: 0, rowSpan: 0, rowNumber: 6 },
-            civil: { colSpan: 0, rowSpan: 1, rowNumber: 5 },
-            mechanical: { colSpan: 0, rowSpan: 1, rowNumber: 5 },
-            management: { colSpan: 1, rowSpan: 0, rowNumber: 2 },
-            bba: { colSpan: 0, rowSpan: 3, rowNumber: 3 },
-            bbs: { colSpan: 0, rowSpan: 3, rowNumber: 3 }
-          };
+            'study.': { colSpan: 9, rowSpan: 0, rowNumber: 1 },
+            'science.study.': { colSpan: 7, rowSpan: 0, rowNumber: 2 },
+            'bio.science.study.': { colSpan: 2, rowSpan: 0, rowNumber: 3 },
+            'pharmacy.bio.science.study.': { colSpan: 0, rowSpan: 2, rowNumber: 4 },
+            'mbbs.bio.science.study.': { colSpan: 1, rowSpan: 0, rowNumber: 4 },
+            'general.mbbs.bio.science.study.': { colSpan: 0, rowSpan: 1, rowNumber: 5 },
+            'md.mbbs.bio.science.study.': { colSpan: 0, rowSpan: 1, rowNumber: 5 },
+            'math.science.study.': { colSpan: 4, rowSpan: 0, rowNumber: 3 },
+            'pureMath.math.science.study.': { colSpan: 0, rowSpan: 2, rowNumber: 4 },
+            'engineering.math.science.study.': { colSpan: 3, rowSpan: 0, rowNumber: 4 },
+            'computer.engineering.math.science.study.': { colSpan: 1, rowSpan: 0, rowNumber: 5 },
+            'hardware.computer.engineering.math.science.study.': { colSpan: 0, rowSpan: 0, rowNumber: 6 },
+            'software.computer.engineering.math.science.study.': { colSpan: 0, rowSpan: 0, rowNumber: 6 },
+            'civil.engineering.math.science.study.': { colSpan: 0, rowSpan: 1, rowNumber: 5 },
+            'mechanical.engineering.math.science.study.': { colSpan: 0, rowSpan: 1, rowNumber: 5 },
+            'management.study.': { colSpan: 1, rowSpan: 0, rowNumber: 2 },
+            'bba.management.study.': { colSpan: 0, rowSpan: 3, rowNumber: 3 },
+            'bbs.management.study.': { colSpan: 0, rowSpan: 3, rowNumber: 3 }
+        };
         expect(headerInformation).toEqual(result);
     })
 
@@ -144,6 +144,20 @@ describe("test json to excel", () => {
             let data:object = [];
             let generatedWorkBook = jsonExcel.generateExcel([{ title: "empty sheet", data: data }]);
             expect(generatedWorkBook.getWorksheet("empty sheet").name).toEqual("empty sheet");
+        })
+
+        it("should generate excel for json with same nested key", () => {
+            let data: object = [{
+                firstKey: {
+                    test: {
+                        firstKey: "test"
+                    }
+                }
+            }]
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "nested key sheet", data: data }]);
+            let sheet = generatedWorkBook.getWorksheet("nested key sheet");
+            expect(sheet.getRow(1).getCell(1).value).toEqual("firstKey");
+            expect(sheet.getRow(3).getCell(1).value).toEqual("firstKey");
         })
 
     })

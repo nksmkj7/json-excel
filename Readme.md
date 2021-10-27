@@ -1,4 +1,4 @@
-# json-excel
+# json-as-excel
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nksmkj7_json-excel&metric=bugs)](https://sonarcloud.io/dashboard?id=nksmkj7_json-excel)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nksmkj7_json-excel&metric=security_rating)](https://sonarcloud.io/dashboard?id=nksmkj7_json-excel)
@@ -204,6 +204,7 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
 | ----------- | ----------- |
 | 1.0.4 | <ul><li>Installation guide update in Readme</li></ul> | |
 | 1.0.5 | <ul><li>Example updated in github</li><li>Bug Fixes<ul><li>Fixed crash when sheet data is empty object</li><li>Check mandatory title and data for sheet configuration. If not provided, error is thrown</li></ul> </li></ul> | |
+| 1.0.6 | <ul><li>Test updated for case when data has same nested key</li><li>Bug Fixes<ul><li>Cell merge issue when sheet data has same nested key</li></ul> </li></ul> | |
 
 ## MIT License
 

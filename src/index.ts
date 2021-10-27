@@ -62,23 +62,29 @@ function getHeaderInformation(flattenJson: object) {
       const splittedArray = data.split(delimiter);
       const lastHeaderKey = splittedArray[splittedArray.length - 1];
       let rowSpan = 0;
-      for (const headerKey of splittedArray) {
-        const rowNumber = splittedArray.indexOf(headerKey) + 1;
+      let previousHeaderKey = "";
+      for (let i = 0; i < splittedArray.length; i++){
+        let headerKey = splittedArray[i];
+        const rowNumber =i + 1;
+        let headerKeyCopy = `${headerKey}${delimiter}${previousHeaderKey}`;
         if (
-          !headerInformation?.[headerKey] ||
-          (headerInformation?.[headerKey] && headerInformation[headerKey].rowNumber !== rowNumber)
+          !headerInformation?.[headerKeyCopy] ||
+          (headerInformation?.[headerKeyCopy] && headerInformation[headerKeyCopy].rowNumber !== rowNumber)
         ) {
-          if (lastHeaderKey === headerKey) {
+          
+          if (lastHeaderKey === headerKey && i === splittedArray.length - 1) {
             rowSpan = maxDepth - rowNumber - 1;
           }
-          headerInformation[headerKey] = {
+        
+          headerInformation[headerKeyCopy] = {
             colSpan: 0,
             rowSpan,
             rowNumber,
           };
         } else {
-          headerInformation[headerKey].colSpan += 1;
+          headerInformation[headerKeyCopy].colSpan += 1;
         }
+        previousHeaderKey = headerKeyCopy;
       }
     }
   }
@@ -96,7 +102,7 @@ function mergeCell(
   sheet.mergeCells(startRow, startColumn, endRow, endColumn);
   const row = sheet.getRow(rowNumber);
   const cell = row.getCell(startColumn);
-  cell.value = header;
+  cell.value = header.split(delimiter)[0];
 }
 
 function getColumnCell(rowNumber: number, colSpan: number, rowSpan: number) {
@@ -110,7 +116,7 @@ function getColumnCell(rowNumber: number, colSpan: number, rowSpan: number) {
 function findMaxDepth(flattenJson: object) {
   Object.keys(flattenJson).forEach((data) => {
     const splittedArray = data.split(delimiter);
-    if (maxDepth < splittedArray.length) {
+    if (maxDepth <= splittedArray.length) {
       maxDepth = splittedArray.length + 1;
     }
   });
@@ -146,7 +152,9 @@ export = {
         key: jsonKey,
       }));
       data.forEach((jsonData) => {
-        sheet.addRow(flatten(jsonData));
+          sheet.addRow(flatten(jsonData,{
+            delimiter,
+          }));
       });
     });
     return workbook;
