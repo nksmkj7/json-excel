@@ -213,6 +213,7 @@ In above example, excel that has header, all with upper case will be generated.
 | 1.0.5 | <ul><li>Example updated in github</li><li>Bug Fixes<ul><li>Fixed crash when sheet data is empty object</li><li>Check mandatory title and data for sheet configuration. If not provided, error is thrown</li></ul> </li></ul> | |
 | 1.0.6 | <ul><li>Test updated for case when data has same nested key</li><li>Bug Fixes<ul><li>Cell merge issue when sheet data has same nested key</li></ul> </li></ul> | |
 | 1.0.7 | <ul><li>Feature<ul><li>Feature to change header format is now added. For reference, look at headerFormatter option above.</li></ul> </li></ul> | |
+| 1.0.8 | <ul><li>Readme updated</li></ul> | |
 
 ## MIT License
 
