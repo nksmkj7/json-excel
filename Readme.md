@@ -195,7 +195,7 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
 ### headerFormatter (optional)
  headerFormatter is a  function that accepts header as an argument and return computed header.
  ```
-  generateExcel([{title:"firstSheet", data:data, delimiter:"%",headerFunction: (header) => header.toUpperCase()}])
+  generateExcel([{title:"firstSheet", data:data, delimiter:"%",headerFormatter: (header) => header.toUpperCase()}])
 ```
 In above example, excel that has header, all with upper case will be generated.
 
