@@ -1,4 +1,5 @@
-const excel = require('json-as-excel');
+// const excel = require('json-as-excel');
+const excel = require('../lib/index');
 async function generate() {
   const workbook = excel.generateExcel([
     {
@@ -6,7 +7,7 @@ async function generate() {
       data: [
         {
           study: {
-            science: {
+            science_test: {
               bio: {
                 pharmacy: 'Kamran Bains',
                 mbbs: {
@@ -34,7 +35,7 @@ async function generate() {
         },
         {
           study: {
-            science: {
+            science_test: {
               bio: {
                 pharmacy: 'Riley-James Duran',
                 mbbs: {
@@ -61,6 +62,10 @@ async function generate() {
           },
         },
       ],
+      headerFormatter: (header) => {
+        const { startCase } = require('lodash');
+        return startCase(header);
+      },
     },
     {
       title: 'second sheet',

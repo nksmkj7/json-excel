@@ -15,6 +15,7 @@ interface Sheet {
     [index: string]: any;
   };
   delimiter?: string;
+  headerFormatter?: Function;
 }
 
 interface HeaderInformationType {
@@ -47,11 +48,11 @@ function addWorkSheet(workSheet: Sheet) {
   return workbook.addWorksheet(worksheetTittle, worksheetOptions);
 }
 
-function setExcelHeader(flattenJson: object) {
+function setExcelHeader(flattenJson: object,headerFormatter: Function|undefined) {
   headerInformation = getHeaderInformation(flattenJson);
   for (const header in headerInformation) {
     if (headerInformation.hasOwnProperty(header)) {
-      mergeCell(header, headerInformation[header]);
+      mergeCell(header, headerInformation[header],headerFormatter);
     }
   }
 }
@@ -94,6 +95,7 @@ function getHeaderInformation(flattenJson: object) {
 function mergeCell(
   header: string,
   { colSpan, rowNumber, rowSpan }: { colSpan: number; rowNumber: number; rowSpan: number },
+  headerFormatter: Function|undefined
 ) {
   const startRow = rowNumber;
   const startColumn = getColumnCell(rowNumber, colSpan, rowSpan);
@@ -102,7 +104,7 @@ function mergeCell(
   sheet.mergeCells(startRow, startColumn, endRow, endColumn);
   const row = sheet.getRow(rowNumber);
   const cell = row.getCell(startColumn);
-  cell.value = header.split(delimiter)[0];
+  cell.value = headerFormatter ? headerFormatter(header.split(delimiter)[0]) : header.split(delimiter)[0];
 }
 
 function getColumnCell(rowNumber: number, colSpan: number, rowSpan: number) {
@@ -140,6 +142,7 @@ export = {
       cellTracker = {};
       maxDepth = 0;
       headerInformation = {};
+      let headerFormatterFn = sheetConfigurations[0]?.headerFormatter;
       sheet = addWorkSheet(sheetConfig);
       checkSheetConfiguration(sheetConfig);
       const data = Array.isArray(sheetConfig?.data) ? sheetConfig?.data : [sheetConfig?.data];
@@ -147,7 +150,7 @@ export = {
         delimiter,
       });
       findMaxDepth(flattenJson);
-      setExcelHeader(flattenJson);
+      setExcelHeader(flattenJson,headerFormatterFn);
       sheet.columns = Object.keys(flattenJson).map((jsonKey) => ({
         key: jsonKey,
       }));

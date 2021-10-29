@@ -165,13 +165,13 @@ Title is name for sheet.
 ### data
 Data is json object whose keys are generated as header in excel and values are placed as new row per object.
 
-### delimiter 
+### delimiter (optional)
   `.` is used as a default delimiter. If json data consists key with `'.'`, one need to change delimiter to any other delimiter.
   ```js
   generateExcel([{title:"firstSheet", data:data, delimiter:"%"}])
   ```
 
-### options
+### options (optional)
 options are the exceljs available worksheet options i.e. [Worksheet Properties](https://www.npmjs.com/package/exceljs#worksheet-properties), [Page Setup](https://www.npmjs.com/package/exceljs#page-setup), [Headers and Footers](https://www.npmjs.com/package/exceljs#headers-and-footers)\
 More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs)
  ```js
@@ -192,6 +192,13 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
   generateExcel([{title:"firstSheet", data:data, delimiter:"%", options:options}])
   ```
 
+### headerFormatter (optional)
+ headerFormatter is a  function that accepts header as an argument and return computed header.
+ ```
+  generateExcel([{title:"firstSheet", data:data, delimiter:"%",headerFunction: (header) => header.toUpperCase()}])
+```
+In above example, excel that has header, all with upper case will be generated.
+
 ## Acknowledgments
 1. [ exceljs](https://www.npmjs.com/package/exceljs) 
 2. [ flat ](https://www.npmjs.com/package/flat)
@@ -205,6 +212,7 @@ More detail can be obtained from [exceljs](https://www.npmjs.com/package/exceljs
 | 1.0.4 | <ul><li>Installation guide update in Readme</li></ul> | |
 | 1.0.5 | <ul><li>Example updated in github</li><li>Bug Fixes<ul><li>Fixed crash when sheet data is empty object</li><li>Check mandatory title and data for sheet configuration. If not provided, error is thrown</li></ul> </li></ul> | |
 | 1.0.6 | <ul><li>Test updated for case when data has same nested key</li><li>Bug Fixes<ul><li>Cell merge issue when sheet data has same nested key</li></ul> </li></ul> | |
+| 1.0.7 | <ul><li>Feature<ul><li>Feature to change header format is now added. For reference, look at headerFormatter option above.</li></ul> </li></ul> | |
 
 ## MIT License
 

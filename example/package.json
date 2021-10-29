@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "json-as-excel": "^1.0.5"
+    "json-as-excel": "^1.0.6",
+    "lodash": "^4.17.21"
   }
 }

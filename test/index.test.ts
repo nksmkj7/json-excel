@@ -160,6 +160,19 @@ describe("test json to excel", () => {
             expect(sheet.getRow(3).getCell(1).value).toEqual("firstKey");
         })
 
+        it("should change header to upper case when heading formatting function is passed as headerFormatter", () => {
+            let data: object = [{
+                firstkey: {
+                    test: {
+                        firstkey: "test"
+                    }
+                }
+            }]
+            let generatedWorkBook = jsonExcel.generateExcel([{ title: "header formatter test", data: data,headerFormatter: (header:string) => header.toUpperCase() }]);
+            let sheet = generatedWorkBook.getWorksheet("header formatter test");
+            expect(sheet.getRow(1).getCell(1).value).toBe("FIRSTKEY");
+        })
+
     })
 
 })
