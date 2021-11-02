@@ -214,6 +214,7 @@ In above example, excel that has header, all with upper case will be generated.
 | 1.0.6 | <ul><li>Test updated for case when data has same nested key</li><li>Bug Fixes<ul><li>Cell merge issue when sheet data has same nested key</li></ul> </li></ul> | |
 | 1.0.7 | <ul><li>Feature<ul><li>Feature to change header format is now added. For reference, look at headerFormatter option above.</li></ul> </li></ul> | |
 | 1.0.8 | <ul><li>Readme updated</li></ul> | |
+| 1.0.9 | <ul><li>Bug Fixes<ul><li>Worksheet name already exists issue fixed.</li></ul> </li></ul> | |
 
 ## MIT License
 

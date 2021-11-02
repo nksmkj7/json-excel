@@ -1,5 +1,5 @@
 import * as Excel from 'exceljs';
-const workbook = new Excel.Workbook();
+let workbook: Excel.Workbook ;
 import { flatten } from 'flat';
 
 let maxDepth: number = 0;
@@ -126,6 +126,7 @@ function findMaxDepth(flattenJson: object) {
 
 export = {
   generateExcel: (sheetConfigurations: Sheet[]) => {
+    workbook = new Excel.Workbook()
     if (!Array.isArray(sheetConfigurations)) {
       sheetConfigurations = [sheetConfigurations];
     }
