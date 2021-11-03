@@ -162,6 +162,7 @@ Method generateExcel accepts array of objects. Each object represents individual
 ### title
 Title is name for sheet.
 
+
 ### data
 Data is json object whose keys are generated as header in excel and values are placed as new row per object.
 
@@ -221,3 +222,4 @@ In above example, excel that has header, all with upper case will be generated.
 ```
 Copyright (c) 2021
 ```
+
